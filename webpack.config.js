@@ -3,9 +3,12 @@ var path = require('path');
 module.exports = {
 	context: __dirname + "/app",
 
-	entry: './js/app.js',
+	entry: {
+		app: './js/app.js',
+		test: './js/test/alltests.js',
+	},
 	output: {
-		filename: 'app.js',
+		filename: '[name].js',
 		path: path.resolve(__dirname, 'bin'),
 	},
 	module: {
