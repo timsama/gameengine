@@ -1,9 +1,20 @@
 var path = require('path');
 
 module.exports = {
-	entry: './app/main.js',
+	context: __dirname + "/app",
+
+	entry: './js/app.js',
 	output: {
-		filename: 'game.js',
-		path: path.resolve(__dirname, 'bin')
-	}
+		filename: 'app.js',
+		path: path.resolve(__dirname, 'bin'),
+	},
+	module: {
+		loaders: [
+			{
+				test: /\.js$/,
+				exclude: /node_modules/,
+				loader: 'babel-loader',
+			},
+		]
+	},
 };
