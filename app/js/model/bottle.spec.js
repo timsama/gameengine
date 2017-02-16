@@ -8,35 +8,19 @@ describe('bottle', () => {
 		expect(selfTargeted(Bottle.Contents.FAIRY)).toBe(true);
 		expect(selfTargeted(Bottle.Contents.RED_POTION)).toBe(true);
 		expect(selfTargeted(Bottle.Contents.BLUE_POTION)).toBe(true);
+		expect(selfTargeted(Bottle.Contents.MILK_HALF)).toBe(true);
+		expect(selfTargeted(Bottle.Contents.MILK_FULL)).toBe(true);
 	});
 
-	it('should be able to apply self-targeting contents to the passed-in character', () => {
-		let bottle = new Bottle(Bottle.Contents.RED_POTION);
+	it('should be able to consume its contents correctly', () => {
+		// empty cases
+		expect(Bottle.getConsumedContents(Bottle.Contents.EMPTY)).toBe(Bottle.Contents.EMPTY);
+		expect(Bottle.getConsumedContents(Bottle.Contents.FAIRY)).toBe(Bottle.Contents.EMPTY);
+		expect(Bottle.getConsumedContents(Bottle.Contents.RED_POTION)).toBe(Bottle.Contents.EMPTY);
+		expect(Bottle.getConsumedContents(Bottle.Contents.BLUE_POTION)).toBe(Bottle.Contents.EMPTY);
+		expect(Bottle.getConsumedContents(Bottle.Contents.MILK_HALF)).toBe(Bottle.Contents.EMPTY);
 
-		let character = { applyBottle: (contents) => {
-				return true;
-			}
-		}
-		let target = { applyBottle: (contents) => {
-				return false;
-			}
-		}
-
-		expect(bottle.useContents(character, target)).toBe(true);
-	});
-
-	it('should be able to apply non-self-targeting contents to passed-in targets', () => {
-		let bottle = new Bottle(Bottle.Contents.EMPTY);
-
-		let character = { applyBottle: (contents) => {
-				return false;
-			}
-		}
-		let target = { applyBottle: (contents) => {
-				return true;
-			}
-		}
-
-		expect(bottle.useContents(character, target)).toBe(true);
+		// non-empty cases
+		expect(Bottle.getConsumedContents(Bottle.Contents.MILK_FULL)).toBe(Bottle.Contents.MILK_HALF);
 	});
 });
